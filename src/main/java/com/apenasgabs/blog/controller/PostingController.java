@@ -1,4 +1,4 @@
-package controller;
+package com.apenasgabs.blog.controller;
 
 import java.util.List;
 
@@ -15,8 +15,6 @@ import com.apenasgabs.blog.repository.PostingRepository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-
 @RestController
 @RequestMapping("/posts")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -26,14 +24,14 @@ public class PostingController {
   private PostingRepository postingRepository;
 
   @GetMapping("/all")
-  public ResponseEntity<List<Posting>> getAll(){
+  public ResponseEntity<List<Posting>> getAll() {
     return ResponseEntity.ok(postingRepository.findAll());
   }
-  
+
   @PostMapping("/create")
-  public  ResponseEntity<Posting> createPost(@RequestBody Posting newPost) {
-        Posting createdPost = postingRepository.save(newPost);
-      return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
+  public ResponseEntity<Posting> createPost(@RequestBody Posting newPost) {
+    Posting createdPost = postingRepository.save(newPost);
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
   }
-  
+
 }
