@@ -29,15 +29,15 @@ public class Posting {
   private String content;
 
   @UpdateTimestamp
-  private LocalDateTime date; 
+  private LocalDateTime lastUpdate; 
 
-  public Posting() {
-  }
+  // public Posting() {
+  // }
 
-  public Posting(String title, String content) {
-    this.title = title;
-    this.content = content;
-  }
+  // public Posting(String title, String content) {
+  //   this.title = title;
+  //   this.content = content;
+  // }
 
   public Long getId() {
     return id;
@@ -60,11 +60,11 @@ public class Posting {
   }
 
   public LocalDateTime getData() {
-    return date;
+    return lastUpdate;
   }
 
-  public void setData(LocalDateTime date) {
-    this.date = date;
+  public void setData(LocalDateTime newDate) {
+    this.lastUpdate = newDate;
   }
 
 }
