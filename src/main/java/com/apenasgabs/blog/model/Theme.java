@@ -25,9 +25,9 @@ public class Theme {
   @NotNull(message = "You must write a description")
   private String description;
 
-  @OneToMany(mappedBy = "theme", cascade = CascadeType.REMOVE)
-  @JsonIgnoreProperties("theme")
-  private List<Posting> posts;
+  // @OneToMany(mappedBy = "theme", cascade = CascadeType.REMOVE)
+  // @JsonIgnoreProperties("theme")
+  // private List<Posting> posts;
 
 
   public Long getId() {
@@ -46,12 +46,12 @@ public class Theme {
     this.description = description;
   }
 
-  public List<Posting> getPosts() {
-    return this.posts;
-  }
+  // public List<Posting> getPosts() {
+  //   return this.posts;
+  // }
 
-  public void setPosts(List<Posting> posts) {
-    this.posts = posts;
-  }
+  // public void setPosts(List<Posting> posts) {
+  //   this.posts = posts;
+  // }
 
 }

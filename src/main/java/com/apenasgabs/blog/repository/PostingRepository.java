@@ -9,6 +9,6 @@ import com.apenasgabs.blog.model.Posting;
 
 public interface PostingRepository extends JpaRepository<Posting, Long> {
   
-  List<Posting> findAllBydTitleContainingIgnoreCase(@Param("title") String title);
+  List<Posting> findAllByTitleContainingIgnoreCase(@Param("title") String title);
   
 }
