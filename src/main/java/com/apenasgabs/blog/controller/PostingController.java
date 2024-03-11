@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/posts")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostingController {
 
   @Autowired
   private PostingRepository postingRepository;
 
-  @GetMapping("/all")
+  @GetMapping
   public ResponseEntity<List<Posting>> getAll() {
     return ResponseEntity.ok(postingRepository.findAll());
   }
@@ -42,14 +42,19 @@ public class PostingController {
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @PostMapping("/create")
+  @GetMapping("title/{title}")
+  public ResponseEntity<List<Posting>>getByTitle(@PathVariable String title) {
+    return ResponseEntity.ok(postingRepository.findAllByTitleContainingIgnoreCase(title));
+  }
+
+  @PostMapping
   public ResponseEntity<Posting> createPost(@Valid @RequestBody Posting newPost) {
     Posting createdPost = postingRepository.save(newPost);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
   }
 
-  @PutMapping("/update/{id}")
-  public ResponseEntity<Posting> updatePost(@Valid @RequestBody Posting updatedPost) {
+  @PutMapping("/{id}")
+  public ResponseEntity<Posting> updatePut(@Valid @RequestBody Posting updatedPost) {
     return postingRepository.findById(updatedPost.getId()).map(response -> ResponseEntity.status(HttpStatus.OK).body(postingRepository.save(updatedPost)))
     .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     /* 
