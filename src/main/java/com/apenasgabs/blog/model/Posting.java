@@ -35,8 +35,8 @@ public class Posting {
   @CreationTimestamp
   private LocalDateTime createdAt;
 
-  // public Posting() {
-  // }
+  public Posting() {
+  }
 
   public Posting(String title, String content) {
     this.title = title;
