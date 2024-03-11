@@ -2,6 +2,7 @@ package com.apenasgabs.blog.model;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Entity;
@@ -23,21 +24,24 @@ public class Posting {
   @NotBlank(message = "Title is required")
   @Size(min = 5, max = 100, message = "Title must be between 5 and 100 characters")
   private String title;
-  
+
   @NotBlank(message = "Content is required")
   @Size(min = 5, max = 1000, message = "Content must be between 5 and 1000 characters")
   private String content;
 
   @UpdateTimestamp
-  private LocalDateTime lastUpdate; 
+  private LocalDateTime lastUpdate;
+
+  @CreationTimestamp
+  private LocalDateTime createdAt;
 
   // public Posting() {
   // }
 
-  // public Posting(String title, String content) {
-  //   this.title = title;
-  //   this.content = content;
-  // }
+  public Posting(String title, String content) {
+    this.title = title;
+    this.content = content;
+  }
 
   public Long getId() {
     return id;
