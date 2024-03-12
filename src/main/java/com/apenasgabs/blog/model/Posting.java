@@ -38,9 +38,9 @@ public class Posting {
   @CreationTimestamp
   private LocalDateTime createdAt;
 
-  // @ManyToOne
-  // @JsonIgnoreProperties("theme")
-  // private Theme theme;
+  @ManyToOne
+  @JsonIgnoreProperties("theme")
+  private Theme theme;
 
   public Posting() {
   }
