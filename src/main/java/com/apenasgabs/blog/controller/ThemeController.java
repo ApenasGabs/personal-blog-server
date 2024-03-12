@@ -31,7 +31,7 @@ public class ThemeController {
   @Autowired
   private ThemeRepository themeRepository;
 
-  @GetMapping("/all")
+  @GetMapping 
   public ResponseEntity<List<Theme>> getAll() {
     return ResponseEntity.ok(themeRepository.findAll());
   }
@@ -42,13 +42,13 @@ public class ThemeController {
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @PostMapping("/create")
+  @PostMapping
   public ResponseEntity<Theme> createPosting(@Valid @RequestBody Theme newPost) {
     Theme createdPost = themeRepository.save(newPost);
     return ResponseEntity.status(HttpStatus.CREATED).body(createdPost);
   }
 
-  @PutMapping("/update/{id}")
+  @PutMapping("/{id}")
   public ResponseEntity<@Valid Theme> updatePosting(@Valid @RequestBody Theme updatedPost) {
     return themeRepository.findById(updatedPost.getId()).map(response -> ResponseEntity.status(HttpStatus.OK).body(themeRepository.save(updatedPost)))
     .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
