@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -41,6 +42,17 @@ public class ThemeController {
     return themeRepository.findById(id).map(response -> ResponseEntity.ok(response))
         .orElse(ResponseEntity.notFound().build());
   }
+  
+  @GetMapping("/search")
+  public ResponseEntity<List<Theme>> getByDescricao(@RequestParam String description) {
+      List<Theme> themes = themeRepository.findAllByDescriptionContainingIgnoreCase(description);
+      if(themes.isEmpty()) {
+          return ResponseEntity.noContent().build();
+      } else {
+          return ResponseEntity.ok(themes);
+      }
+  }
+
 
   @PostMapping
   public ResponseEntity<Theme> createPosting(@Valid @RequestBody Theme newPost) {
