@@ -39,8 +39,24 @@ public class Posting {
   private LocalDateTime createdAt;
 
   @ManyToOne
-  @JsonIgnoreProperties("theme")
+  @JsonIgnoreProperties("posting")
   private Theme theme;
+
+  @ManyToOne
+  @JsonIgnoreProperties("posting")
+  private User user;
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public void setTheme(Theme theme) {
+    this.theme = theme;
+  }
 
   public Posting() {
   }
