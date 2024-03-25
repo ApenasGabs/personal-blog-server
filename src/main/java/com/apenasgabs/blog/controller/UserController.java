@@ -20,11 +20,16 @@ import com.apenasgabs.blog.model.User;
 import com.apenasgabs.blog.repository.UserRepository;
 import com.apenasgabs.blog.service.UserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@Tag(name = "User Controller", description = "Controller for user operations")
 public class UserController {
 
     @Autowired
@@ -34,43 +39,55 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/all")
+    @Operation(summary = "Get all users", responses = {
+        @ApiResponse(description = "Successful Operation", responseCode = "200", content = @Content),
+        @ApiResponse(description = "No users found", responseCode = "404")
+    })
     public ResponseEntity<List<User>> getAll(){
-
         return ResponseEntity.ok(userRepository.findAll());
-
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get a user by ID", responses = {
+        @ApiResponse(description = "User found", responseCode = "200", content = @Content),
+        @ApiResponse(description = "User not found", responseCode = "404")
+    })
     public ResponseEntity<User> getById(@PathVariable Long id) {
         return userRepository.findById(id)
-                .map(response -> ResponseEntity.ok(response))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Authenticate a user", responses = {
+        @ApiResponse(description = "Authentication successful", responseCode = "200", content = @Content),
+        @ApiResponse(description = "Authentication failed", responseCode = "401")
+    })
     public ResponseEntity<UserLogin> authenticateUser(@RequestBody Optional<UserLogin> userLogin){
-
         return userService.authenticateUser(userLogin)
                 .map(response -> ResponseEntity.status(HttpStatus.OK).body(response))
                 .orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
     @PostMapping("/register")
+    @Operation(summary = "Register a new user", responses = {
+        @ApiResponse(description = "User created", responseCode = "201", content = @Content),
+        @ApiResponse(description = "Bad request", responseCode = "400")
+    })
     public ResponseEntity<User> postUser(@RequestBody @Valid User user) {
-
         return userService.registerUser(user)
                 .map(response -> ResponseEntity.status(HttpStatus.CREATED).body(response))
                 .orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-
     }
 
     @PutMapping("/update")
+    @Operation(summary = "Update an existing user", responses = {
+        @ApiResponse(description = "User updated", responseCode = "200", content = @Content),
+        @ApiResponse(description = "User not found", responseCode = "404")
+    })
     public ResponseEntity<User> updateUser(@Valid @RequestBody User user) {
-
         return userService.updateUser(user)
                 .map(response -> ResponseEntity.status(HttpStatus.OK).body(response))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-
     }
-
 }
