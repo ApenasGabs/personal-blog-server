@@ -44,9 +44,9 @@ public class UserService {
 
         if(userRepository.findById(user.getId()).isPresent()) {
 
-            Optional<User> searchUser = userRepository.findByEmail(user.getEmail());
+            Optional<User> userSearched = userRepository.findByEmail(user.getEmail());
 
-            if ( (searchUser.isPresent()) && ( searchUser.get().getId() != user.getId()))
+            if ( (userSearched.isPresent()) && ( userSearched.get().getId() != user.getId()))
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists!", null);
 
             user.setPassword(encryptPassword(user.getPassword()));
